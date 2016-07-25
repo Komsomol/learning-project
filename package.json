@@ -1,0 +1,23 @@
+{
+  "name": "learning-react",
+  "version": "0.0.1",
+  "description": "Learning React",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Komsomol/learning-react.git"
+  },
+  "keywords": [
+    "react",
+    "node"
+  ],
+  "author": "Farhad Agzamov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Komsomol/learning-react/issues"
+  },
+  "homepage": "https://github.com/Komsomol/learning-react#readme"
+}
