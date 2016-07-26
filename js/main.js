@@ -50,13 +50,7 @@ var app = {
 
 	// We want a custom YT Embed code to be used so we strip the URL given by Reddit API
 	formatYoutubeURL:function(url){
-		// url is https://www.youtube.com/watch?v=N3dJLRfBtu4 
-		if(url.length == 43){
-			return url.substr(32);
-		// url is https://youtu.be/RHtpN0ypQuc
-		} else {
-			return url.substr(17);
-		}
+		return url.slice(-11);
 	},
 
 	// Reddit API stores iframe embeds as HTML entities so we decode them using this.
