@@ -9,6 +9,8 @@ var app = {
 			method:'GET',
 		};
 
+		$('.main').css('opacity','0');
+
 		// Using the new FETCH API to get data. Fetch does not support JSONP sources
 		fetch(app.vars.url).then(function(response, method){
 			console.log(response.status);
@@ -22,7 +24,7 @@ var app = {
 	injectHTML:function(data){
 		var stuff = app.processData(data);
 
-		var html = '<div class="post"><h2 class="name"><%=data.title %></h2><iframe width="640" height="360" src="https://www.youtube-nocookie.com/embed/<%=app.formatYoutubeURL(data.url)%>?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe> </div>';
+		var html = '<div class="post"><h3 class="name"><%=data.title %></h3><iframe width="640" height="360" src="https://www.youtube.com/embed/<%=app.formatYoutubeURL(data.url)%>?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe> </div>';
 
 		var template = _.template(html);
 
@@ -30,6 +32,11 @@ var app = {
 		_.each(stuff, function (stuff) {
 			$('.main').append(template(stuff));
 		});
+
+		document.querySelector('iframe').onload = function(){
+			console.log('iframe loaded');
+			$('.main').css('opacity','1');
+		};
 	},
 
 	// We filter the JSON data response from the Reddit API to get only Youtube embeds
@@ -43,7 +50,13 @@ var app = {
 
 	// We want a custom YT Embed code to be used so we strip the URL given by Reddit API
 	formatYoutubeURL:function(url){
-		return url.substr(32);
+		// url is https://www.youtube.com/watch?v=N3dJLRfBtu4 
+		if(url.length == 43){
+			return url.substr(32);
+		// url is https://youtu.be/RHtpN0ypQuc
+		} else {
+			return url.substr(17);
+		}
 	},
 
 	// Reddit API stores iframe embeds as HTML entities so we decode them using this.

@@ -3,3 +3,16 @@
      -moz-box-sizing: border-box; /* Firefox 1+ */
           box-sizing: border-box; /* Chrome, IE8+, Opera, Safari 5.1*/
 }
+
+.main{
+	margin: 0 auto;
+	width: 80%;
+}
+
+.post{
+	text-align: center;
+}
+
+.post iframe{
+	display: inline-block;
+}
