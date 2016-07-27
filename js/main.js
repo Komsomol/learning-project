@@ -1,6 +1,7 @@
 var app = {
 	vars:{
-		url:'https://www.reddit.com/r/movies.json'
+		url:'https://www.reddit.com/r/videos.json',
+		holderDiv: $('.main')
 	},
 
 	init:function(){
@@ -9,13 +10,17 @@ var app = {
 			method:'GET',
 		};
 
-		$('.main').css('opacity','0');
+		app.vars.holderDiv.css('opacity','0');
+		// TweenLite.to(app.vars.holderDiv, 1, {opacity:0});
 
 		// Using the new FETCH API to get data. Fetch does not support JSONP sources
 		fetch(app.vars.url).then(function(response, method){
 			console.log(response.status);
 			return response.json();
 		}).then(function(jsonObject){
+			console.log(jsonObject);
+			// after = next page if added to URL e.g. ?after=XXXXX
+			app.vars.after = jsonObject.data.after;
 			app.injectHTML(jsonObject.data.children);
 		});
 	},
@@ -35,7 +40,10 @@ var app = {
 
 		document.querySelector('iframe').onload = function(){
 			console.log('iframe loaded');
-			$('.main').css('opacity','1');
+
+			// $('.main').css('opacity','1').fitVids();
+			app.vars.holderDiv.fitVids();
+			TweenLite.to(app.vars.holderDiv, 2, {opacity:1});
 		};
 	},
 
@@ -61,4 +69,8 @@ var app = {
 	}
 };
 
-window.onload = app.init();
+if (window.jQuery){
+	console.log('jquery not loaded');
+} else {
+	window.onload = app.init();
+}

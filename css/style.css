@@ -4,9 +4,18 @@
           box-sizing: border-box; /* Chrome, IE8+, Opera, Safari 5.1*/
 }
 
-.main{
+body{
+	font-family: 'Roboto', Helvetica, Arial, Sans-Serif;
 	margin: 0 auto;
-	width: 80%;
+	max-width: 50em;
+	line-height: 1.5;
+	padding: 4em 1em;
+	color: #555;
+}
+
+h2 {
+	margin-top: 1em;
+	padding-top: 1em;
 }
 
 .post{
