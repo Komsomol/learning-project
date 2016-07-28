@@ -19,5 +19,9 @@
   "bugs": {
     "url": "https://github.com/Komsomol/learning-react/issues"
   },
-  "homepage": "https://github.com/Komsomol/learning-react#readme"
+  "homepage": "https://github.com/Komsomol/learning-react#readme",
+  "devDependencies": {
+    "babel-polyfill": "^6.9.1",
+    "babel-preset-es2015": "^6.9.0"
+  }
 }

@@ -15,10 +15,12 @@ var app = {
 
 		// Using the new FETCH API to get data. Fetch does not support JSONP sources
 		fetch(app.vars.url).then(function(response, method){
-			console.log(response.status);
-			return response.json();
+			if(response.status == 200){
+				return response.json();
+			} else {
+				console.log('No API Response');
+			}
 		}).then(function(jsonObject){
-			console.log(jsonObject);
 			// after = next page if added to URL e.g. ?after=XXXXX
 			app.vars.after = jsonObject.data.after;
 			app.injectHTML(jsonObject.data.children);
@@ -26,15 +28,20 @@ var app = {
 	},
 
 	// HTML injection will take place here
-	injectHTML:function(data){
+	injectHTML:function(json){
+		var data = typeof json !== 'undefined' ? json : [];
+
+		// We strip the response to only return Youtube embeds
 		var stuff = app.processData(data);
 
+		// we pull specific data and run a function on one set
 		var html = '<div class="post"><h3 class="name"><%=data.title %></h3><iframe width="640" height="360" src="https://www.youtube.com/embed/<%=app.formatYoutubeURL(data.url)%>?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe> </div>';
 
 		var template = _.template(html);
 
 		// This time we use underscores each method to iterate over all data to render to template
 		_.each(stuff, function (stuff) {
+			// pass  the target div, append to DOM and use stripped data
 			$('.main').append(template(stuff));
 		});
 
@@ -43,7 +50,7 @@ var app = {
 
 			// $('.main').css('opacity','1').fitVids();
 			app.vars.holderDiv.fitVids();
-			TweenLite.to(app.vars.holderDiv, 2, {opacity:1});
+			TweenLite.to(app.vars.holderDiv, 0.2, {opacity:1});
 		};
 	},
 
@@ -69,8 +76,11 @@ var app = {
 	}
 };
 
-if (window.jQuery){
-	console.log('jquery not loaded');
-} else {
-	window.onload = app.init();
-}
+// checks if Jquery loaded
+window.onload = function(window){
+	if (window.jQuery){
+		console.log('jquery not loaded');
+	} else {
+		app.init();
+	}
+};
